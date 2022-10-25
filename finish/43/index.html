@@ -306,7 +306,7 @@
         }
         $('#Dep_1').selectpicker('refresh');
     })
-    var oReq = new XMLHttpRequest();
+    var oReq;
     ///年度選擇
     $('#Year_0').change(function () {
         Year_0_chose = $('#Year_0').val();
@@ -351,12 +351,12 @@
         });
         myChart.update()
     }
+    oReq = new XMLHttpRequest();
+    oReq.open("GET", urls[0], true);
+    oReq.responseType = "arraybuffer";
     showData();
     function showData() {
 
-        oReq = new XMLHttpRequest();
-        oReq.open("GET", urls[0], true);
-        oReq.responseType = "arraybuffer";
 
         oReq.onload = function (e) {
             var arraybuffer = oReq.response;
