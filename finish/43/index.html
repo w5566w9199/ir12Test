@@ -24,10 +24,16 @@
 
 <body>
     <div class="container">
-        <h2 class=" text-center">2022台泰日越大專學生學習成效與滿意度調查</h2>
+        <h2 class=" text-center">台泰日越大專學生學習成效與滿意度調查</h2>
         <h2 class=" text-center">填答率查詢系統</h2>
         <h5 style="text-align: right;">以下資料統計時間為：111 年 7 月 10 日 23:59 分</h3>
             <div class="col-3 text-center" style="margin-top: 3rem;">
+                <select class="selectpicker" data-live-search="true" id="Year_0" size=5 data-max-options=""
+                    title="請選擇年度" data-actions-box="true">
+                    <option value="111年度">111年度</option>
+                    <option value="110年度">110年度</option>
+                </select>
+
                 <select class="selectpicker" multiple data-live-search="true" id="Dep_0" data-max-options=""
                     title="請選擇部別" data-actions-box="true" data-none-selected-text="全部" data-select-all-text="全選"
                     data-deselect-all-text="取消全選">
@@ -145,7 +151,7 @@
             maintainAspectRatio: true,//保持長寬比
             title: {
                 display: false,
-                text: '2022台泰日越大專學生學習成效與滿意度調查',
+                text: '台泰日越大專學生學習成效與滿意度調查',
                 fontSize: 22
             },
             legend: {
@@ -255,6 +261,7 @@
         });
         myChart.update()
     })
+    
     ///學院選擇
     $('#Dep_1').change(function () {
         Dep_1_chose = $('#Dep_1').val()
@@ -295,6 +302,29 @@
             $('#Dep_1').append("<option value='" + [Dep_1[k][0], Dep_1[k][1]] + "'>" + Dep_1[k][0] + "-" + Dep_1[k][1] + "</option>")
         }
         $('#Dep_1').selectpicker('refresh');
+    })
+    ///年度選擇
+    $('#Year_0').change(function () {
+        Year_0_chose = $('#Year_0').val()
+        Dep_0 = []
+        if (Year_0_chose) {
+            for (var i = 0; i < Year_0_chose.length; i++) {
+                var tmp = Year_0_chose[i].split(',')
+                keys = Object.keys(datadata[tmp[0]][[tmp[1]]])
+                for (var j = 0; j < keys.length; j++) {
+                    Dep_0.push([Year_0_chose[i], keys[j]])
+                }
+            }
+        }
+        $('#Dep_0').empty();
+        for (var k = 0; k < Dep_0.length; k++) {
+            var tmp = Dep_0[k][0].split(',')
+            $('#Dep_0').append("<option value='" + [Dep_0[k][0], Dep_0[k][1]] + "'>" + tmp[0] + "-" + tmp[1] + "-" + Dep_0[k][1] + "</option>")
+        }
+        $('#Dep_0').selectpicker('refresh');
+        if ($('#Dep_0').val() == null) {
+            college(Year_1_chose);
+        }
     })
     function college(dep2) {
         labels = []
@@ -368,6 +398,7 @@
             current = resdata[i]
             excel2json([current[0], current[1], current[2], current[3]], [current[4], current[5], current[6]])
         }
+        $('#Year_0').selectpicker('val',['111學年度']);
         $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
         $('#Dep_0').change()
         $('#Dep_1').selectpicker('selectAll');
