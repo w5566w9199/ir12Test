@@ -390,10 +390,10 @@
             current = resdata[i]
             excel2json([current[0], current[1], current[2], current[3]], [current[4], current[5], current[6]])
         }
-        $('#Year_0').selectpicker('111年度');
         $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
         $('#Dep_0').change()
         $('#Dep_1').selectpicker('selectAll');
+        $('#Year_0').selectpicker('val', '111年度');
     }
     oReq.send();
 
