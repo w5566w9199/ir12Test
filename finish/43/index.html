@@ -226,97 +226,99 @@
             },
         }]
     };
-    myChart = new Chart(document.getElementById('myChart'), config);
 
-    $('#Dep_2').change(function () {
-        Dep_2_chose = $('#Dep_2').val()
+    function showData() {
 
-        if (Dep_2_chose == null) {
-            return college(Dep_1_chose);
-        }
-        labels = []
-        response_rate = []
-        answered = []
-        no_answer = []
-        //3:已填答 4:未填答 5:填答率
-        //     |       |       |
-        //     0       1       2
-        for (var e = 0; e < Dep_2_chose.length; e++) {
-            var tmp = Dep_2_chose[e].split(',')
-            Object.keys(datadata[tmp[0]][tmp[1]][tmp[2]]).forEach(key => {
-                labels.push(tmp[0] + "\n" + tmp[1] + "\n" + tmp[2] + "\n" + key)
-                answered.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][0])
-                no_answer.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][1])
-                response_rate.push(Math.round(datadata[tmp[0]][tmp[1]][tmp[2]][key][2]))
-            })
-        }
-        myChart.data.labels = labels
-        myChart.data.datasets[0].data = response_rate
-        myChart.data.datasets[1].data = answered
-        myChart.data.datasets[2].data = no_answer
-        myChart.data.labels.forEach(function (e, i, a) {
-            if (/\n/.test(e)) {
-                a[i] = e.split(/\n/);
+
+        myChart = new Chart(document.getElementById('myChart'), config);
+
+        $('#Dep_2').change(function () {
+            Dep_2_chose = $('#Dep_2').val()
+
+            if (Dep_2_chose == null) {
+                return college(Dep_1_chose);
             }
-        });
-        myChart.update()
-    })
+            labels = []
+            response_rate = []
+            answered = []
+            no_answer = []
+            //3:已填答 4:未填答 5:填答率
+            //     |       |       |
+            //     0       1       2
+            for (var e = 0; e < Dep_2_chose.length; e++) {
+                var tmp = Dep_2_chose[e].split(',')
+                Object.keys(datadata[tmp[0]][tmp[1]][tmp[2]]).forEach(key => {
+                    labels.push(tmp[0] + "\n" + tmp[1] + "\n" + tmp[2] + "\n" + key)
+                    answered.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][0])
+                    no_answer.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][1])
+                    response_rate.push(Math.round(datadata[tmp[0]][tmp[1]][tmp[2]][key][2]))
+                })
+            }
+            myChart.data.labels = labels
+            myChart.data.datasets[0].data = response_rate
+            myChart.data.datasets[1].data = answered
+            myChart.data.datasets[2].data = no_answer
+            myChart.data.labels.forEach(function (e, i, a) {
+                if (/\n/.test(e)) {
+                    a[i] = e.split(/\n/);
+                }
+            });
+            myChart.update()
+        })
 
-    ///學院選擇
-    $('#Dep_1').change(function () {
-        Dep_1_chose = $('#Dep_1').val()
-        Dep_2 = []
-        if (Dep_1_chose) {
-            for (var i = 0; i < Dep_1_chose.length; i++) {
-                var tmp = Dep_1_chose[i].split(',')
-                keys = Object.keys(datadata[tmp[0]][[tmp[1]]])
-                for (var j = 0; j < keys.length; j++) {
-                    Dep_2.push([Dep_1_chose[i], keys[j]])
+        ///學院選擇
+        $('#Dep_1').change(function () {
+            Dep_1_chose = $('#Dep_1').val()
+            Dep_2 = []
+            if (Dep_1_chose) {
+                for (var i = 0; i < Dep_1_chose.length; i++) {
+                    var tmp = Dep_1_chose[i].split(',')
+                    keys = Object.keys(datadata[tmp[0]][[tmp[1]]])
+                    for (var j = 0; j < keys.length; j++) {
+                        Dep_2.push([Dep_1_chose[i], keys[j]])
+                    }
                 }
             }
-        }
-        $('#Dep_2').empty();
-        for (var k = 0; k < Dep_2.length; k++) {
-            var tmp = Dep_2[k][0].split(',')
-            $('#Dep_2').append("<option value='" + [Dep_2[k][0], Dep_2[k][1]] + "'>" + tmp[0] + "-" + tmp[1] + "-" + Dep_2[k][1] + "</option>")
-        }
-        $('#Dep_2').selectpicker('refresh');
-        if ($('#Dep_2').val() == null) {
-            college(Dep_1_chose);
-        }
-    })
-    ///部別選擇
-    $('#Dep_0').change(function () {
-        Dep_0_chose = $('#Dep_0').val()
-        Dep_1 = []
-        if (Dep_0_chose) {
-            for (var i = 0; i < Dep_0_chose.length; i++) {
-                keys = Object.keys(datadata[Dep_0_chose[i]])
-                for (var j = 0; j < keys.length; j++) {
-                    Dep_1.push([Dep_0_chose[i], keys[j]])
+            $('#Dep_2').empty();
+            for (var k = 0; k < Dep_2.length; k++) {
+                var tmp = Dep_2[k][0].split(',')
+                $('#Dep_2').append("<option value='" + [Dep_2[k][0], Dep_2[k][1]] + "'>" + tmp[0] + "-" + tmp[1] + "-" + Dep_2[k][1] + "</option>")
+            }
+            $('#Dep_2').selectpicker('refresh');
+            if ($('#Dep_2').val() == null) {
+                college(Dep_1_chose);
+            }
+        })
+        ///部別選擇
+        $('#Dep_0').change(function () {
+            Dep_0_chose = $('#Dep_0').val()
+            Dep_1 = []
+            if (Dep_0_chose) {
+                for (var i = 0; i < Dep_0_chose.length; i++) {
+                    keys = Object.keys(datadata[Dep_0_chose[i]])
+                    for (var j = 0; j < keys.length; j++) {
+                        Dep_1.push([Dep_0_chose[i], keys[j]])
+                    }
                 }
             }
-        }
-        $('#Dep_1').empty();
-        for (var k = 0; k < Dep_1.length; k++) {
-            $('#Dep_1').append("<option value='" + [Dep_1[k][0], Dep_1[k][1]] + "'>" + Dep_1[k][0] + "-" + Dep_1[k][1] + "</option>")
-        }
-        $('#Dep_1').selectpicker('refresh');
-    })
+            $('#Dep_1').empty();
+            for (var k = 0; k < Dep_1.length; k++) {
+                $('#Dep_1').append("<option value='" + [Dep_1[k][0], Dep_1[k][1]] + "'>" + Dep_1[k][0] + "-" + Dep_1[k][1] + "</option>")
+            }
+            $('#Dep_1').selectpicker('refresh');
+        })
+    }
+
     var oReq = new XMLHttpRequest();
     ///年度選擇
     $('#Year_0').change(function () {
         Year_0_chose = $('#Year_0').val();
-        console.log('asdsada'+$('#Year_0').index);
+        console.log('asdsada' + $('#Year_0').index);
         oReq = new XMLHttpRequest();
-        oReq.open("GET",urls[$('#Year_0').index], true);
+        oReq.open("GET", urls[$('#Year_0').index], true);
         oReq.responseType = "arraybuffer";
-        // Dep_0 = []
-        // if ($('#Dep_0').val() == null) {
-        //     college(Year_0_chose);
-        // }
+        showData();
     })
-
     function college(dep2) {
         labels = []
         response_rate = []
@@ -389,9 +391,9 @@
             excel2json([current[0], current[1], current[2], current[3]], [current[4], current[5], current[6]])
         }
         $('#Year_0').selectpicker('val', '111年度');
-        $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
-        $('#Dep_0').change()
-        $('#Dep_1').selectpicker('selectAll');
+        // $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
+        // $('#Dep_0').change()
+        // $('#Dep_1').selectpicker('selectAll');
     }
     oReq.send();
 
