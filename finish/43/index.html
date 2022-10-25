@@ -262,13 +262,12 @@
                 a[i] = e.split(/\n/);
             }
         });
-        myChart.update()
-        showData()
+        myChart.update();
     })
 
     ///學院選擇
     $('#Dep_1').change(function () {
-        Dep_1_chose = $('#Dep_1').val()
+        Dep_1_chose = $('#Dep_1').val();
         Dep_2 = []
         if (Dep_1_chose) {
             for (var i = 0; i < Dep_1_chose.length; i++) {
@@ -288,7 +287,7 @@
         if ($('#Dep_2').val() == null) {
             college(Dep_1_chose);
         }
-        showData()
+
     })
     ///部別選擇
     $('#Dep_0').change(function () {
@@ -307,7 +306,7 @@
             $('#Dep_1').append("<option value='" + [Dep_1[k][0], Dep_1[k][1]] + "'>" + Dep_1[k][0] + "-" + Dep_1[k][1] + "</option>")
         }
         $('#Dep_1').selectpicker('refresh');
-        showData()
+
     })
     var oReq;
     ///年度選擇
@@ -396,10 +395,11 @@
             }
             if (first) {
 
+                $('#Year_0').selectpicker('val', 0);
+                $('#Year_0').change();
                 $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
                 $('#Dep_0').change()
                 $('#Dep_1').selectpicker('selectAll');
-                $('#Year_0').selectpicker('val', 0);
                 first=false;
             }
         }
