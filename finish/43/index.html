@@ -228,8 +228,6 @@
     };
 
     function showData() {
-
-
         myChart = new Chart(document.getElementById('myChart'), config);
 
         $('#Dep_2').change(function () {
@@ -309,16 +307,18 @@
         })
     }
 
+    showData();
     var oReq = new XMLHttpRequest();
     ///年度選擇
     $('#Year_0').change(function () {
         Year_0_chose = $('#Year_0').val();
-        console.log('asdsada' + $('#Year_0').index);
+        console.log($('#Year_0')[0].value);
         oReq = new XMLHttpRequest();
-        oReq.open("GET", urls[$('#Year_0').index], true);
+        oReq.open("GET", urls[$('#Year_0')[0].value], true);
         oReq.responseType = "arraybuffer";
         showData();
     })
+
     function college(dep2) {
         labels = []
         response_rate = []
