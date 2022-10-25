@@ -316,7 +316,6 @@
         oReq = new XMLHttpRequest();
         oReq.open("GET", urls[$('#Year_0')[0].value], true);
         oReq.responseType = "arraybuffer";
-        $('#Dep_0').empty();
         $('#Year_0').selectpicker('refresh');
         showData()
     })
