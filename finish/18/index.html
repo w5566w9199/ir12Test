@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雇主滿意度調查</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/top.css">
+    <script type="module" src="../js/scroll.js"></script>
+    <script nomodule src="../js/scroll.js"></script>
+    <script src="../js/top.js"></script>
+    <script src="../js/chartlabel.js"></script>
+</head>
+
+<body>
+    <!--回頂部按鈕-->
+    <button id="topBtn" onclick="topFunction(40)" title="GoTop">Top</button>
+    <div class="container">
+        <h1>110學年度雇主滿意度調查</h1>
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="NAV">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="insert(whole_result)">全校</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(bussiness_result)">商學院</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(design_result)">設計學院</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(philology_result)">語文學院</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(Information_result)">資訊與流通學院</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(health_result)">中護健康學院</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert(wisdom_result)">智慧產業學院</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        $('#NAV a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    }) 
+</script>
+<script>
+    content = {
+        "一、請您依照本校畢業生在貴公司的表現予以評價": {
+            "(一)專業知能方面": [
+                {
+                    "id": '01',
+                    "Question": '1.具備的專業知識用於工作需求上',
+                },
+                {
+                    "id": '02',
+                    "Question": '2.能將專業技能用於工作實務上',
+                }
+
+            ],
+            "(二)工作表現方面": [
+                {
+                    "id": '03',
+                    "Question": '3.外語能力',
+                }, {
+                    "id": '04',
+                    "Question": '4.工作效率',
+                }, {
+                    "id": '05',
+                    "Question": '5.責任感',
+                }, {
+                    "id": '06',
+                    "Question": '6.敬業的工作態度',
+                }, {
+                    "id": '07',
+                    "Question": '7.工作上解決問題能力',
+                }, {
+                    "id": '08',
+                    "Question": '8.工作上團隊合作能力',
+                }, {
+                    "id": '09',
+                    "Question": '9.與主管、同仁及下屬的溝通能力',
+                }, {
+                    "id": '10',
+                    "Question": '10.可接受批評且主動改進之態度',
+                }, {
+                    "id": '11',
+                    "Question": '11.國際化視野',
+                }, {
+                    "id": '12',
+                    "Question": '12.創意與創新能力表現',
+                }, {
+                    "id": '13',
+                    "Question": '13.抗壓性',
+                }, {
+                    "id": '14',
+                    "Question": '14.情緒管理能力',
+                }, {
+                    "id": '15',
+                    "Question": '15.參與學習的意願',
+                }]
+        },
+        "二、給予本校的回饋": [
+            {
+                "id": '16',
+                "Question": '16.貴公司再任用本校畢業生的意願為何',
+                "Answer": ['非常願意', '願意', '普通', '不願意', '非常不願意'],
+            },
+            {
+                "id": '17',
+                "Question": '17.為提高本校畢業生符合職場需求，建議學校待加強事項',
+                "Answer": ['針對職場調整課程設計', '增加至業界實習機會', '強化實務的應用', '協助學生瞭解及規劃職涯方向', '專業證照取得', '加強外語能力', '其他'],
+            }, {
+                "id": '18',
+                "Question": '18.在聘用新進人員時，徵才的考量因素有哪些',
+                "Answer": ['畢業成績', '實務經驗', '外語能力', '人際關係', '社團經驗', '職場倫理', '溝通能力', '電腦能力', '儀容談吐', '打工經驗', '工作態度、配合度', '專業技能、競賽得獎經歷',
+                    '未來發展潛力', '其他'],
+            }, {
+                "id": '19',
+                "Question": '19.貴公司有無提供大專校院學生實習機會',
+                "Answer": ['有', '沒有'],
+            }, {
+                "id": '20',
+                "Question": '20.貴公司是否願意提供本校學生實習機會',
+                "Answer": ['願意', '目前尚未規劃'],
+            },
+        ]
+    }
+    var whole_result = [
+        [59, 41, 9, 1, 0], //1
+        [61, 40, 8, 1, 0], //2
+        [25, 37, 47, 0, 1], //3
+        [60, 47, 3, 0, 0], //4
+        [69, 37, 4, 0, 0], //5
+        [70, 34, 6, 0, 0], //6
+        [59, 44, 7, 0, 0], //7
+        [66, 38, 6, 0, 0], //8
+        [59, 44, 6, 1, 0], //9
+        [62, 42, 5, 1, 0], //10
+        [44, 46, 20, 0, 0], //11
+        [47, 47, 16, 0, 0], //12
+        [57, 46, 7, 0, 0], //13
+        [59, 46, 5, 0, 0], //14
+        [70, 36, 4, 0, 0], //15
+        [79, 29, 2, 0, 0], //16
+        [33, 67, 71, 35, 37, 44, 3], //17
+        [7, 70, 23, 36, 5, 41, 92, 34, 45, 10, 90, 27, 42, 0], //18
+        [81, 29], //19
+        [79, 31] //20
+    ]
+    var bussiness_result = [
+        [31, 21, 3, 0, 0], //1
+        [30, 24, 1, 0, 0], //2
+        [16, 21, 17, 0, 1], //3
+        [29, 25, 1, 0, 0], //4
+        [35, 19, 1, 0, 0], //5
+        [35, 17, 3, 0, 0], //6
+        [32, 22, 1, 0, 0], //7
+        [36, 18, 1, 0, 0], //8
+        [31, 23, 0, 1, 0], //9
+        [29, 24, 1, 1, 0], //10
+        [22, 26, 7, 0, 0], //11
+        [26, 24, 5, 0, 0], //12
+        [30, 24, 1, 0, 0], //13
+        [31, 23, 1, 0, 0], //14
+        [34, 20, 1, 0, 0], //15
+        [39, 16, 0, 0, 0], //16
+        [16, 34, 31, 16, 23, 22, 1], //17
+        [4, 32, 19, 18, 3, 23, 43, 16, 26, 7, 39, 16, 18, 0], //18
+        [41, 14], //19
+        [39, 16] //20
+    ]
+    var design_result = [
+        [4, 5, 2, 0, 0], //1
+        [4, 5, 2, 0, 0], //2
+        [1, 4, 6, 0, 0], //3
+        [3, 8, 0, 0, 0], //4
+        [7, 4, 0, 0, 0], //5
+        [7, 4, 0, 0, 0], //6
+        [4, 7, 0, 0, 0], //7
+        [4, 7, 0, 0, 0], //8
+        [3, 8, 0, 0, 0], //9
+        [5, 6, 0, 0, 0], //10
+        [2, 4, 5, 0, 0], //11
+        [3, 6, 2, 0, 0], //12
+        [4, 6, 1, 0, 0], //13
+        [3, 7, 1, 0, 0], //14
+        [6, 5, 0, 0, 0], //15
+        [8, 2, 1, 0, 0], //16
+        [5, 8, 10, 3, 2, 2, 1], //17
+        [1, 8, 0, 2, 0, 2, 9, 8, 5, 0, 11, 1, 5, 0], //18
+        [9, 2], //19
+        [9, 2] //20
+    ]
+    var philology_result = [
+        [3, 3, 1, 1, 0], //1
+        [3, 3, 1, 1, 0], //2
+        [1, 2, 5, 0, 0], //3
+        [4, 3, 1, 0, 0], //4
+        [5, 2, 1, 0, 0], //5
+        [5, 2, 1, 0, 0], //6
+        [5, 1, 2, 0, 0], //7
+        [5, 1, 2, 0, 0], //8
+        [5, 1, 2, 0, 0], //9
+        [5, 1, 2, 0, 0], //10
+        [4, 2, 2, 0, 0], //11
+        [3, 3, 2, 0, 0], //12
+        [4, 1, 3, 0, 0], //13
+        [3, 4, 1, 0, 0], //14
+        [5, 2, 1, 0, 0], //15
+        [7, 3, 1, 0, 0], //16
+        [2, 6, 6, 5, 4, 6, 0], //17
+        [0, 6, 2, 4, 0, 1, 8, 5, 3, 2, 11, 1, 6, 0], //18
+        [6, 5], //19
+        [7, 4] //20
+    ]
+    var Information_result = [
+        [12, 6, 1, 0, 0], //1
+        [15, 3, 1, 0, 0], //2
+        [4, 6, 9, 0, 0], //3
+        [16, 2, 1, 0, 0], //4
+        [16, 3, 0, 0, 0], //5
+        [16, 3, 0, 0, 0], //6
+        [14, 4, 1, 0, 0], //7
+        [15, 3, 1, 0, 0], //8
+        [14, 4, 1, 0, 0], //9
+        [16, 3, 0, 0, 0], //10
+        [14, 3, 2, 0, 0], //11
+        [12, 5, 2, 0, 0], //12
+        [14, 5, 0, 0, 0], //13
+        [16, 3, 0, 0, 0], //14
+        [17, 2, 0, 0, 0], //15
+        [14, 5, 0, 0, 0], //16
+        [4, 8, 13, 3, 5, 10, 0], //17
+        [2, 14, 2, 4, 1, 4, 18, 4, 4, 0, 18, 9, 10, 0], //18
+        [14, 5], //19
+        [14, 5] //20
+    ]
+    var health_result = [
+        [9, 5, 2, 0, 0], //1
+        [9, 4, 3, 0, 0], //2
+        [3, 4, 9, 0, 0], //3
+        [8, 8, 0, 0, 0], //4
+        [6, 8, 2, 0, 0], //5
+        [7, 7, 2, 0, 0], //6
+        [4, 9, 3, 0, 0], //7
+        [6, 8, 2, 0, 0], //8
+        [6, 7, 3, 0, 0], //9
+        [7, 7, 2, 0, 0], //10
+        [2, 10, 4, 0, 0], //11
+        [3, 8, 5, 0, 0], //12
+        [5, 9, 2, 0, 0], //13
+        [6, 8, 2, 0, 0], //14
+        [8, 6, 2, 0, 0], //15
+        [13, 3, 0, 0, 0], //16
+        [6, 10, 11, 7, 3, 5, 1], //17
+        [0, 11, 0, 7, 1, 9, 13, 2, 6, 1, 13, 0, 5, 0], //18
+        [13, 3], //19
+        [13, 3] //20
+    ]
+
+    var wisdom_result = [
+        [0, 1, 0, 0, 0], //1
+        [0, 1, 0, 0, 0], //2
+        [0, 0, 1, 0, 0], //3
+        [0, 1, 0, 0, 0], //4
+        [0, 1, 0, 0, 0], //5
+        [0, 1, 0, 0, 0], //6
+        [0, 1, 0, 0, 0], //7
+        [0, 1, 0, 0, 0], //8
+        [0, 1, 0, 0, 0], //9
+        [0, 1, 0, 0, 0], //10
+        [0, 1, 0, 0, 0], //11
+        [0, 1, 0, 0, 0], //12
+        [0, 1, 0, 0, 0], //13
+        [0, 1, 0, 0, 0], //14
+        [0, 1, 0, 0, 0], //15
+        [1, 0, 0, 0, 0], //16
+        [0, 1, 1, 1, 0, 1, 0], //17
+        [0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0], //18
+        [1, 0], //19
+        [0, 1] //20
+    ]
+
+
+
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    var container = document.getElementsByClassName('container')[1]
+    container.innerHTML = ''
+    function insert(select = whole_result) {
+        var container = document.getElementsByClassName('container')[1]
+        container.innerHTML = ''
+        var div = document.createElement("div")
+        div.className = "col-12"
+        var title = document.createElement("h2")
+        var level1 = Object.keys(content)[0]
+        title_text = document.createTextNode(level1)
+        title.appendChild(title_text)
+        div.appendChild(title)
+        container.appendChild(div)
+        for (var i in content[level1]) {
+            var div_1 = document.createElement("div")
+            div_1.className = "col-12"
+            var title = document.createElement("h3")
+            title_text = document.createTextNode(i)
+            title.appendChild(title_text)
+            div_1.appendChild(title)
+            container.appendChild(div_1)
+            for (var j = 0; j < content[level1][i].length; j++) {
+                var div_2 = document.createElement("div")
+                div_2.className = "col-12"
+                var question = document.createElement("p")
+                question_text = document.createTextNode(content[level1][i][j]["Question"])
+                question.appendChild(question_text)
+                div_2.appendChild(question)
+                var canvas = document.createElement("canvas")
+                canvas.id = content[level1][i][j]["id"]
+                container.appendChild(div_2)
+                container.appendChild(canvas)
+                draw(content[level1][i][j]["id"], null, select[parseInt(content[level1][i][j]["id"]) - 1], content[level1][i][j]["Question"])
+
+            }
+        }
+        var div_3 = document.createElement("div")
+        div_3.className = "col-12"
+        var title = document.createElement("h2")
+        var level2 = Object.keys(content)[1]
+        title_text = document.createTextNode(level2)
+        title.appendChild(title_text)
+        div_3.appendChild(title)
+        container.appendChild(div_3)
+        for (var j = 0; j < content[level2].length; j++) {
+            var div_2 = document.createElement("div")
+            div_2.className = "col-12"
+            var question = document.createElement("p")
+            question_text = document.createTextNode(content[level2][j]["Question"])
+            question.appendChild(question_text)
+            div_2.appendChild(question)
+            var canvas = document.createElement("canvas")
+            canvas.id = content[level2][j]["id"]
+            container.appendChild(div_2)
+            container.appendChild(canvas)
+            draw(content[level2][j]["id"], content[level2][j]["Answer"], select[parseInt(content[level2][j]["id"]) - 1], content[level2][j]["Question"])
+
+        }
+    }
+
+    function draw(id, Answer, result, Question) {
+        if (Answer == null) {
+            Answer = [
+                '非常滿意',
+                '滿意',
+                '普通',
+                '不滿意',
+                '非常不滿意']
+        }
+        var barChartData = {
+            labels: Answer,
+            datasets: [{
+                label: Question,
+                backgroundColor: window.chartColors.green,
+                data: result
+            }]
+
+        };
+        var ctx = document.getElementById(id).getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                legend: {
+                    lebels: {
+                        FontColor: 'red',
+                    },
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 18
+                        },
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            callback: function (value, index, values) {
+                                return value + '人';
+                            },
+                            fontSize: 18
+                        },
+                        stacked: true,
+                    }],
+                },
+                plugins: {
+                    datalabels: {
+                        align: 'end',
+                        anchor: 'end',
+                        offset: '1'
+                    }
+                }
+            },
+            plugins: [{
+                beforeInit: function (chart) {
+                    chart.data.labels.forEach(function (e, i, a) {
+                        if (/\n/.test(e)) {
+                            a[i] = e.split(/\n/);
+                        }
+                    });
+                }
+            }]
+        });
+    };
+
+    window.onload = function () {
+        insert();
+    };
+
+</script>
+
+</html>

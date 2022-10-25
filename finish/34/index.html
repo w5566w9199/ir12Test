@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國立臺中科技大學109學年度辦理100萬元以上採購案件一覽表</title>
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.core.min.js"
+        integrity="sha512-Nml08bTNsmV1v/7rMaYUL6KzLfG87gslxgWtInWf6NhbgivCWsJ0cV3K9l+MwLXwrjKVA4IcbfPoYwvwWdAT2Q=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"
+        integrity="sha512-NerWxp37F9TtBS1k1cr2TjyC9c8Qh6ghgqVBOYXaahgnBkVT6a8KVbO05Z8+LnIIom4CJSSQTZ3VbL396scK5w=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/top.css">
+    <script type="module" src="../js/scroll.js"></script>
+    <script nomodule src="../js/scroll.js"></script>
+    <script src="../js/top.js"></script>
+</head>
+
+<body>
+    <!--回頂部按鈕-->
+    <button id="topBtn" onclick="topFunction(40)" title="GoTop">Top</button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" colspan="9" style="text-align:center;">國立臺中科技大學109學年度辦理100萬元以上採購案件一覽表</th>
+            </tr>
+            <tr>
+                <th scope="col" colspan="9" style="text-align:center;">中華民國109年8月1日至110年7月31日</th>
+            </tr>
+            <tr>
+                <th scope="col" colspan="7" style="text-align:center;"></th>
+                <th scope="col" colspan="2" style="text-align:right;">單位：新臺幣元</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">序號</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">採購名稱 </th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">採購品項
+                    （註2）</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">辦理方式
+                    （註3）</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">得標廠商名稱</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">採購金額
+                    (註4)</th>
+                <th scope="col" class="align-middle" colspan="3" style="text-align:center;">是否接受政府補助</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script>
+    var url = "109buy.xlsx";
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function (e) {
+        var arraybuffer = oReq.response;
+        var data = new Uint8Array(arraybuffer);
+        var arr = new Array();
+        for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+        var bstr = arr.join("");
+        var workbook = XLSX.read(bstr, { type: "binary" });
+        var first_sheet_name = workbook.SheetNames[0];
+        /* Get worksheet */
+        var worksheet = workbook.Sheets[first_sheet_name];
+        resdata = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        con = ''
+        for (var i = 5; i < resdata.length - 6; ++i) {
+            var tmp = ''
+            for (var j = 0; j < resdata[5].length; j++) {
+                if (resdata[i][j] != null) {
+                    tmp = tmp + '<td class="align-middle" style="text-align:center;">' + resdata[i][j] + '</td>'
+                }
+                else {
+                    tmp = tmp + '<td></td>'
+                }
+            }
+            con = con + '<tr>' + tmp + '</tr>'
+        }
+        for (var i = 55; i < resdata.length; ++i) {
+            var tmp = ''
+            for (var j = 0; j < resdata[5].length; j++) {
+                if (resdata[i][j] != null) {
+                    tmp = tmp + '<td colspan="9">' + resdata[i][j] + '</td>'
+                }
+            }
+            con = con + '<tr>' + tmp + '</tr>'
+        }
+        document.getElementsByTagName('tbody')[0].innerHTML = con
+    }
+    oReq.send();
+</script>
+
+</html>

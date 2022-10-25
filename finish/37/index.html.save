@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <li
+    <title>每生校地及校舍(或樓地板)面積(以公頃為單位)</title>
+    <style>
+        iframe {
+            width: 95vw;
+            height: 95vh;
+            margin-left: 2.5vw;
+
+        }
+    </style>
+</head>
+
+<body>
+    <iframe src="./713916355.pdf" frameborder="0"></iframe>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+html,div,table{
+    padding: .5rem;
+}
+    table > thead>tr>th{
+    border-top: none !important;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+h3{
+  margin-top: 2rem !important;
+}
+table{
+  margin-bottom: 2rem !important;
+}
+h1{
+  text-align: center !important;
+}

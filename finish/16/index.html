@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>應屆畢業生流向調查結果</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+        </script>
+    <link rel="stylesheet" href="../css/top.css">
+    <script type="module" src="../js/scroll.js"></script>
+    <script nomodule src="../js/scroll.js"></script>
+    <script src="../js/top.js"></script>
+    <script src="../js/chartlabel.js"></script>
+</head>
+
+<body>
+    <!--回頂部按鈕-->
+    <button id="topBtn" onclick="topFunction(40)" title="GoTop">Top</button>
+    <div class="container">
+        <h1>應屆畢業生流向調查結果</h1>
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="NAV">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="insert('全校')">全校</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="insert('各學院')">各學院</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+        </div>
+    </div>
+</body>
+<script>
+    data = {
+        "108": {
+            "全校": {
+                "專科": [82, 362, 1, 1, 0, 4, 0, 0, 6, 25, 6, 0, 1, 1, 2, 12],
+                "大學": [56, 107, 30, 50, 33, 182, 0, 4, 343, 1394, 201, 0, 5, 10, 72, 292],
+                "碩士班": [1, 2, 6, 1, 2, 9, 19, 21, 43, 84, 12, 0, 0, 0, 3, 8]
+            },
+            "各學院": {
+                "商學院": [59, 208, 13, 14, 14, 84, 9, 22, 169, 724, 101, 0, 4, 10, 52, 213],
+                "健康學院": [8, 74, 0, 18, 4, 80, 0, 1, 29, 293, 14, 0, 0, 0, 5, 32],
+                "設計學院": [4, 50, 8, 12, 2, 7, 0, 1, 47, 202, 28, 0, 0, 0, 6, 38],
+                "資訊與流通學院": [58, 57, 12, 3, 13, 10, 10, 1, 121, 120, 64, 0, 0, 0, 10, 10],
+                "語文學院": [9, 74, 4, 5, 2, 12, 0, 0, 25, 156, 12, 0, 2, 1, 4, 17],
+                "智慧產業學院": [1, 8, 0, 0, 0, 2, 0, 0, 1, 8, 0, 0, 0, 0, 0, 2],
+            }
+        }
+    }
+</script>
+<script>
+    $(function () {
+        $('#NAV a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    })
+
+    function insert(item) {
+        var container = document.getElementsByClassName('container')[1]
+        container.innerHTML = ''
+        for (i in data[108][item]) {
+            var dataset = []
+            var tmp = []
+            var tmp_dou = []
+            for (var k = 0; k < data[108][item][i].length; k++) {
+                if (k % 2 == 0) {
+                    tmp_dou.push(data[108][item][i][k])
+                } else {
+                    tmp.push(data[108][item][i][k])
+                }
+            }
+            dataset.push(
+                {
+                    label: '男',
+                    backgroundColor: window.chartColors.blue,
+                    stack: 'Stack 0',
+                    data: tmp_dou
+                },
+                {
+                    label: '女',
+                    backgroundColor: window.chartColors.red,
+                    stack: 'Stack 1',
+                    data: tmp
+                }
+            )
+            var canvas = document.createElement("canvas")
+            canvas.id = i
+            container.appendChild(canvas)
+            draw(i, dataset)
+        }
+    }
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        blue: 'rgb(54, 162, 235)',
+    };
+
+    function draw(title, datasets) {
+        var ctx = document.getElementById(title).getContext('2d');
+
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                // labels: ['升學', '就業(全職工作)', '就業(錄取全職工作)', '就業(找工作)', '就業(創業)', '就業(出國打工度假)', '準備考試', '服兵役', '家管',
+                //     '其他'
+                labels: ['升學', '就業(自行創業)', '就業(留於原合作廠商)', '就業(留於原專班領域)', '就業(其他)', '服役', '留學', '其他(含待業)'
+                ],
+                datasets: datasets,
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: title,
+                    fontSize: 24
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14
+                        },
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            callback: function (value, index, values) {
+                                return value + '人';
+                            },
+                            fontSize: 14
+                        },
+                        stacked: true,
+                    }]
+                },
+                plugins: {
+                    datalabels: {
+                        align: 'end',
+                        anchor: 'end',
+                        offset: '1'
+                    }
+                }
+            }
+        });
+    };
+    window.onload = function () {
+        insert('全校')
+    }
+</script>
+
+</html>

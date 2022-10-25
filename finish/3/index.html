@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>國立臺中科技大學 組織架構圖</title>
+    <style id="myStyles">
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Helvetica;
+        }
+
+        #tree {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet">
+    <script src="./OrgChart.js"></script>
+
+    <div id="tree"></div>
+    <script>
+
+        window.onload = function () {
+            OrgChart.templates.group.link = '<path stroke-linejoin="round" stroke="#aeaeae" stroke-width="1px" fill="none" d="M{xa},{ya} {xb},{yb} {xc},{yc} L{xd},{yd}" />';
+            OrgChart.templates.group.nodeMenuButton = '';
+            OrgChart.templates.group.min = Object.assign({}, OrgChart.templates.group);
+            OrgChart.templates.group.min.imgs = "{val}";
+            OrgChart.templates.group.min.description = '<text width="230" text-overflow="multiline" style="font-size: 14px;" fill="#aeaeae" x="125" y="100" text-anchor="middle">{val}</text>';
+
+
+            OrgChart.templates.vice_principal = Object.assign({}, OrgChart.templates.ana);
+            OrgChart.templates.vice_principal.size = [330, 50];
+            OrgChart.templates.vice_principal.node =
+                '<rect x="0" y="0" width="330" height="50" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>';
+            OrgChart.templates.vice_principal.field_0 = '<text style="font-size: 24px;" fill="#aeaeae" x="165" y="35" text-anchor="middle">{val}</text>';
+            OrgChart.templates.vice_principal.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+                + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+            OrgChart.templates.vice_principal.ripple = {
+                radius: 0,
+                color: "#F57C00",
+                rect: null
+            };
+
+            OrgChart.templates.Department = Object.assign({}, OrgChart.templates.ana);
+            // OrgChart.templates.Department.min = Object.assign({}, OrgChart.templates.ana);
+            // OrgChart.templates.Department.min = '<text style="font-size: 24px;" fill="#aeaeae" x="165" y="35" text-anchor="middle">{val}</text>';
+            OrgChart.templates.Department.size = [330, 50];
+            OrgChart.templates.Department.node =
+                '<rect x="0" y="0" width="330" height="50" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>';
+            OrgChart.templates.Department.field_0 = '<text style="font-size: 24px;" fill="#aeaeae" x="165" y="35" text-anchor="middle">{val}</text>';
+            OrgChart.templates.Department.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+                + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+            OrgChart.templates.Department.ripple = {
+                radius: 0,
+                color: "#F57C00",
+                rect: null
+            };
+
+            OrgChart.templates.level2 = Object.assign({}, OrgChart.templates.ana);
+            OrgChart.templates.level2.size = [50, 400];
+            OrgChart.templates.level2.node =
+                '<rect x="0" y="0" width="50" height="400" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>';
+            OrgChart.templates.level2.field_0 = '<text  style="font-size: 24px;" writing-mode="vertical-rl" fill="#aeaeae" x="22" y="200" text-anchor="middle">{val}</text>';
+            OrgChart.templates.level2.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+                + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+            OrgChart.templates.level2.ripple = {
+                radius: 0,
+                color: "#FFCA28",
+                rect: null
+            };
+
+            OrgChart.templates.level3 = Object.assign({}, OrgChart.templates.ana);
+            OrgChart.templates.level3.size = [50, 600];
+            OrgChart.templates.level3.node =
+                '<rect x="0" y="0" width="50" height="600" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>';//框框顏色
+            OrgChart.templates.level3.field_0 = '<text  style="font-size: 24px;" writing-mode="vertical-rl" fill="#aeaeae" x="22" y="300" text-anchor="middle">{val}</text>';
+            OrgChart.templates.level3.plus = '<circle cx="15" cy="15" r="15" fill="#ffffff" stroke="#aeaeae" stroke-width="1"></circle>'
+                + '<text text-anchor="middle" style="font-size: 18px;cursor:pointer;" fill="#757575" x="15" y="22">{collapsed-children-count}</text>';
+            OrgChart.templates.level3.ripple = {
+                radius: 0,
+                color: "#FFCA28",
+                rect: null
+            };
+
+            var chart = new OrgChart(document.getElementById("tree"), {
+                collapse: {
+                    level: 2,
+                    allChildren: true
+                },
+                template: "olivia",
+                // expand: {
+                //     nodes: [33, 34],
+                //     allChildren: true
+                // },
+                menu: {
+                    pdf: { text: "下載至 PDF" },
+                    png: { text: "下載至 PNG" },
+                    svg: { text: "下載至 SVG" }
+                },
+                nodeBinding: {
+                    imgs: function (sender, node) {
+                        if (node.min) {
+                            var val = '';
+                            var count = node.stChildrenIds.length > 5 ? 5 : node.stChildrenIds.length;
+                            var x = node.w / 2 - (count * 32) / 2;
+
+                            for (var i = 0; i < count; i++) {
+                                var data = sender.get(node.stChildrenIds[i]);
+                                val += '<image xlink:href="' + data.img + '" x="' + (x + i * 32) + '" y="45" width="32" height="32" ></image>';
+                            }
+                            return val;
+                        }
+                    },
+                    description: "description",
+                    field_0: "name",
+                    field_1: "title",
+                    img_0: "img",
+
+                },
+                tags: {
+                    "group": {
+                        template: "group",
+                    },
+                    "teaching_unit": {
+                        min: true,
+                        subTreeConfig: {
+                            columns: 2
+                        }
+                    },
+                    "administrative_unit": {
+                        min: true,
+                        subTreeConfig: {
+                            columns: 2
+                        }
+                    },
+                    "Department": {
+                        template: "Department"
+                    },
+                    "level2": {
+                        template: "level2"
+                    },
+                    "level3": {
+                        template: "level3"
+                    },
+                }
+            });
+
+            chart.on('drop', function (sender, draggedNodeId, droppedNodeId) {
+                var draggedNode = sender.getNode(draggedNodeId);
+                var droppedNode = sender.getNode(droppedNodeId);
+
+                if (droppedNode.tags.indexOf("group") != -1 && draggedNode.tags.indexOf("group") == -1) {
+                    var draggedNodeData = sender.get(draggedNode.id);
+                    draggedNodeData.pid = null;
+                    draggedNodeData.stpid = droppedNode.id;
+                    sender.updateNode(draggedNodeData);
+                    return false;
+                }
+            });
+
+            chart.on('click', function (sender, args) {
+                if (args.node.tags.indexOf("group") != -1) {
+                    if (args.node.min) {
+                        sender.maximize(args.node.id);
+                    }
+                    else {
+                        sender.minimize(args.node.id);
+                    }
+                }
+                return false;
+            });
+
+            chart.load([
+                { id: "level1", name: "國立臺中科技大學", tags: ["directors-group", "group"] },
+                { id: "1", stpid: "level1", name: "謝俊宏", title: "校長", img: "data:image/jpeg;base64,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" },
+                { id: "3", stpid: "vice_principal", name: "蕭家孟", pid: 1, title: "副校長", img: "02.jpg", tags: ["vice_principal"] },
+                { id: "4", stpid: "vice_principal", name: "鄭經偉", pid: 1, title: "副校長", img: "03.jpg", tags: ["vice_principal"] },
+                { id: "5", stpid: "vice_principal", name: "陳同孝", pid: 1, title: "副校長", img: "04.jpg", tags: ["vice_principal"] },
+                { id: "administrative_unit", pid: "level1", name: "行政單位", tags: ["administrative_unit", "Department"] },
+                { id: "committee", pid: "level1", name: "委員會", tags: ["Department"] },
+                { id: "teaching_unit", pid: "level1", name: "教學單位", tags: ["teaching_unit", "Department"] },
+                { id: 6, pid: "committee", tags: ["level2"], name: "校務會議" },
+                { id: 7, pid: "committee", tags: ["level2"], name: "行政會議" },
+                { id: 8, pid: "committee", tags: ["level2"], name: "校務發展委員會" },
+                { id: 9, pid: "committee", tags: ["level2"], name: "校務基金管理委員會" },
+                { id: 10, pid: "committee", tags: ["level2"], name: "教師評審委員會" },
+                { id: 11, pid: "committee", tags: ["level2"], name: "教師申訴評議委員會" },
+                { id: 12, pid: "committee", tags: ["level2"], name: "學生申訴評議委員會" },
+                { id: 13, pid: "committee", tags: ["level2"], name: "性別平等教育委員會" },
+                { id: 14, pid: "administrative_unit", tags: ["level2"], name: "校務研究中心" },
+                { id: 33, pid: 14, tags: ["level3"], name: "資訊倉儲管理組" },
+                { id: 34, pid: 14, tags: ["level3"], name: "數據研究分析組" },
+                { id: 16, pid: "administrative_unit", tags: ["level2"], name: "稽核室" },
+                { id: 17, pid: "administrative_unit", tags: ["level2"], name: "教務處" },
+                { id: 35, pid: 17, tags: ["level3"], name: "課務組" },
+                { id: 36, pid: 17, tags: ["level3"], name: "註冊組" },
+                { id: 37, pid: 17, tags: ["level3"], name: "綜合業務組" },
+                { id: 38, pid: 17, tags: ["level3"], name: "教學資源中心" },
+                { id: 18, pid: "administrative_unit", tags: ["level2"], name: "學生事務處" },
+                { id: 39, pid: 18, tags: ["level3"], name: "課外活動指導組" },
+                { id: 40, pid: 18, tags: ["level3"], name: "生活輔導組" },
+                { id: 41, pid: 18, tags: ["level3"], name: "衛生保健組" },
+                { id: 42, pid: 18, tags: ["level3"], name: "學生宿舍組" },
+                { id: 43, pid: 18, tags: ["level3"], name: "學習與勞動權益組" },
+                { id: 44, pid: 18, tags: ["level3"], name: "民生校區學務組" },
+                { id: 19, pid: "administrative_unit", tags: ["level2"], name: "總務處" },
+                { id: 45, pid: 19, tags: ["level3"], name: "事務組" },
+                { id: 46, pid: 19, tags: ["level3"], name: "營繕組" },
+                { id: 47, pid: 19, tags: ["level3"], name: "文書組" },
+                { id: 48, pid: 19, tags: ["level3"], name: "出納組" },
+                { id: 49, pid: 19, tags: ["level3"], name: "資產經營管理組" },
+                { id: 50, pid: 19, tags: ["level3"], name: "民生校區總務組" },
+                { id: 20, pid: "administrative_unit", tags: ["level2"], name: "研究發展處" },
+                { id: 51, pid: 20, tags: ["level3"], name: "學術發展組" },
+                { id: 52, pid: 20, tags: ["level3"], name: "產學合作組" },
+                { id: 53, pid: 20, tags: ["level3"], name: "校務企劃組" },
+                { id: 54, pid: 20, tags: ["level3"], name: "產研中心" },
+                { id: 55, pid: 20, tags: ["level3"], name: "創新育成中心" },
+                { id: 21, pid: "administrative_unit", tags: ["level2"], name: "國際事務處" },
+                { id: 82, pid: 21, tags: ["level3"], name: "國際暨兩岸合作組" },
+                { id: 83, pid: 21, tags: ["level3"], name: "國際學生交流組" },
+                { id: 56, pid: 21, tags: ["level3"], name: "兩岸學生交流組" },
+                { id: 22, pid: "administrative_unit", tags: ["level2"], name: "圖書館" },
+                { id: 80, pid: 22, tags: ["level3"], name: "讀者服務組" },
+                { id: 81, pid: 22, tags: ["level3"], name: "閱覽典藏組" },
+                { id: 57, pid: 22, tags: ["level3"], name: "採編組" },
+                { id: 58, pid: 22, tags: ["level3"], name: "民生校區圖書館分館" },
+                { id: 23, pid: "administrative_unit", tags: ["level2"], name: "電子計算機中心" },
+                { id: 84, pid: 23, tags: ["level3"], name: "網路工程組" },
+                { id: 85, pid: 23, tags: ["level3"], name: "校務資訊組" },
+                { id: 59, pid: 23, tags: ["level3"], name: "教學資訊組" },
+                { id: 24, pid: "administrative_unit", tags: ["level2"], name: "職涯及諮商輔導中心" },
+                { id: 60, pid: 24, tags: ["level3"], name: "服務學習輔導組" },
+                { id: 61, pid: 24, tags: ["level3"], name: "實習與就業輔導組" },
+                { id: 62, pid: 24, tags: ["level3"], name: "諮商輔導組" },
+                { id: 25, pid: "administrative_unit", tags: ["level2"], name: "環境與安全衛生中心" },
+                { id: 26, pid: "administrative_unit", tags: ["level2"], name: "進修部" },
+                { id: 63, pid: 26, tags: ["level3"], name: "註冊組" },
+                { id: 64, pid: 26, tags: ["level3"], name: "課務組" },
+                { id: 65, pid: 26, tags: ["level3"], name: "招生發展" },
+                { id: 66, pid: 26, tags: ["level3"], name: "學生事務組" },
+                { id: 67, pid: 26, tags: ["level3"], name: "綜合業務組" },
+                { id: 27, pid: "administrative_unit", tags: ["level2"], name: "推廣部" },
+                { id: 68, pid: 27, tags: ["level3"], name: "華語中心" },
+                { id: 28, pid: "administrative_unit", tags: ["level2"], name: "秘書室" },
+                { id: 79, pid: 28, tags: ["level3"], name: "綜合業務組" },
+                { id: 69, pid: 28, tags: ["level3"], name: "公共關係與校友服務組" },
+                { id: 29, pid: "administrative_unit", tags: ["level2"], name: "人事室" },
+                { id: 70, pid: 29, tags: ["level3"], name: "第一組" },
+                { id: 71, pid: 29, tags: ["level3"], name: "第二組" },
+                { id: 30, pid: "administrative_unit", tags: ["level2"], name: "主計室" },
+                { id: 72, pid: 30, tags: ["level3"], name: "第一組" },
+                { id: 73, pid: 30, tags: ["level3"], name: "第二組" },
+                { id: 31, pid: "administrative_unit", tags: ["level2"], name: "軍訓室" },
+                { id: 32, pid: "administrative_unit", tags: ["level2"], name: "附設空中學院及專科進修學校" },
+                { id: 74, pid: 32, tags: ["level3"], name: "課務組" },
+                { id: 75, pid: 32, tags: ["level3"], name: "註冊組" },
+                { id: 76, pid: 32, tags: ["level3"], name: "學生事務組" },
+                { id: 77, pid: 32, tags: ["level3"], name: "媒體教學組" },
+                { id: 78, pid: 32, tags: ["level3"], name: "總務組" },
+                { id: 86, pid: "teaching_unit", tags: ["level2"], name: "商學院" },
+                { id: 93, pid: 86, tags: ["level3"], name: "國際貿易與經營系(科)" },
+                { id: 94, pid: 86, tags: ["level3"], name: "會計資訊系(含碩士班、科)" },
+                { id: 95, pid: 86, tags: ["level3"], name: "保險金融管理系(含碩士班、科)" },
+                { id: 96, pid: 86, tags: ["level3"], name: "企業管理系(含碩士班、科)" },
+                { id: 97, pid: 86, tags: ["level3"], name: "財政稅務系(含租稅管理與理財規畫碩士班)" },
+                { id: 98, pid: 86, tags: ["level3"], name: "財務金融系(含碩士班、科)" },
+                { id: 99, pid: 86, tags: ["level3"], name: "應用統計系" },
+                { id: 100, pid: 86, tags: ["level3"], name: "休閒事業經營系" },
+                { id: 101, pid: "teaching_unit", tags: ["level2"], name: "設計學院" },
+                { id: 102, pid: 101, tags: ["level3"], name: "商業設計系 (含碩士班、科)" },
+                { id: 103, pid: 101, tags: ["level3"], name: "多媒體設計系 (含碩士班)" },
+                { id: 104, pid: 101, tags: ["level3"], name: "室內設計系 (含碩士班)" },
+                { id: 105, pid: 101, tags: ["level3"], name: "創意商品設計系(科)" },
+                { id: 106, pid: "teaching_unit", tags: ["level2"], name: "語文學院" },
+                { id: 107, pid: 106, tags: ["level3"], name: "應用日語系(含日本市場暨商務策略碩士班、科)" },
+                { id: 108, pid: 106, tags: ["level3"], name: "應用英語系(科)" },
+                { id: 109, pid: 106, tags: ["level3"], name: "應用中文系" },
+                { id: 89, pid: "teaching_unit", tags: ["level2"], name: "資訊與流通學院" },
+                { id: 110, pid: 89, tags: ["level3"], name: "資訊管理系 (含碩士班、科)" },
+                { id: 111, pid: 89, tags: ["level3"], name: "資訊工程系 (含碩士班、科)" },
+                { id: 112, pid: 89, tags: ["level3"], name: "流通管理系 (含碩士班)" },
+                { id: 90, pid: "teaching_unit", tags: ["level2"], name: "中護健康學院" },
+                { id: 113, pid: 90, tags: ["level3"], name: "護理系(含碩士班、科)" },
+                { id: 114, pid: 90, tags: ["level3"], name: "美容系(含碩士班、科)" },
+                { id: 115, pid: 90, tags: ["level3"], name: "老人服務事業管理系(科)" },
+                { id: 91, pid: "teaching_unit", tags: ["level2"], name: "智慧產業學院" },
+                { id: 116, pid: 91, tags: ["level3"], name: "商業經營系(科)" },
+                { id: 92, pid: "teaching_unit", tags: ["level2"], name: "全人教育委員會" },
+                { id: 117, pid: 92, tags: ["level3"], name: "通識教育中心" },
+                { id: 118, pid: 92, tags: ["level3"], name: "體育室" },
+                { id: 119, pid: 92, tags: ["level3"], name: "語言中心" },
+            ]);
+        };
+
+    </script>
+</body>
+
+</html>

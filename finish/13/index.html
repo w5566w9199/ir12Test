@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各類評鑑結果</title>
+    <link rel="stylesheet" href="index.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+        integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/top.css">
+    <script type="module" src="../js/scroll.js"></script>
+    <script nomodule src="../js/scroll.js"></script>
+    <script src="../js/top.js"></script>
+</head>
+
+<body>
+    <!--回頂部按鈕-->
+    <button id="topBtn" onclick="topFunction(40)" title="GoTop">Top</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 style="font-size: 2.5rem !important; font-weight: 500 !important;">各類評鑑結果</h1>
+            </div>
+            <div class="container">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    newdata = [
+        {
+            title: '國立臺中科技大學教學單位教學專業認證結果',
+            content: {
+                "商學院": [
+                    {
+                        "unit": '企業管理系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）<br> 碩士<br>（日間部、在職專班）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '財務金融系／碩士班',
+                        "system": ['學士<br>（日間部、進修部）<br>碩士<br>（日間部、在職專班）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '會計資訊系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）<br> 碩士<br>（日間部、在職專班）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '保險金融管理系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）<br> 碩士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '財政稅務系',
+                        "system": ['學士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '租稅管理與理財規劃碩士班',
+                        "system": ['碩士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '國際貿易與經營系',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '休閒事業經營系',
+                        "system": ['學士<br>（日間部、進修部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '應用統計系',
+                        "system": ['學士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                ],
+                "資訊與流通學院": [
+                    {
+                        "unit": '資訊管理系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）<br>碩士<br>（日間部、在職專班）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '資訊工程系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部、進修部）<br>碩士<br>（日間部、在職專班）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '流通管理系／碩士班',
+                        "system": ['學士（日間部）<br>碩士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                ],
+                "中護健康學院": [
+                    {
+                        "unit": '護理系／碩士班',
+                        "system": ['學士（含五專部）<br>（日間部）<br>碩士（日間部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '美容系',
+                        "system": ['學士<br>（日間部、進修部）'],
+                        "result": "通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },
+                    {
+                        "unit": '老人服務事業管理系',
+                        "system": ['學士<br>（日間部、進修部）'],
+                        "result": "有條件通過",
+                        "time": "民國 110 年 9 月<br>至<br>民國 115 年 8 月"
+                    },],
+            }
+        },
+    ]
+    data = [
+        {
+            "year": 107,
+            "unit": ["校務類"],
+            "res_name": "評鑑結果",
+            "result": [0]
+        },
+        {
+            "year": 104,
+            "unit": ["國際貿易與經營系(科)"],
+            "res_name": "等第",
+            "result": [2]
+        },
+        {
+            "year": 102,
+            "unit": ["行政類", "中護健康學院", "商學院", "設計學院 ", "資訊與流通學院", "語文學院", "企業管理系(科)/碩士班", "休閒事業經營系", "多媒體設計系/碩士班", "老人服務事業管理系(科)", "保險金融管理系(科)", "室內設計系/碩士班", "流通管理系/碩士班", "美容系(科)", "財政稅務系/租稅管理與理財規劃碩士班", "財務金融系/碩士班", "商業設計系/碩士班(含創意商品設計科)", "國際貿易與經營系(科)", "會計資訊系(科)/碩士班 ", "資訊工程系/碩士班", "資訊管理系(科)/碩士班", "應用中文系 ", "應用日語系(科)/日本市場暨商務策略碩士班", "應用英語系(科)", "應用統計系"],
+            "res_name": "等第",
+            "result": [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 3, 2, 1, 1, 2, 1, 2, 1]
+        },
+        {
+            "year": 102,
+            "unit": ["護理科系(含二技及五專部)"],
+            "res_name": "等第",
+            "result": [1]
+        }
+    ]
+
+</script>
+<script>
+    content = document.getElementsByClassName('container')[1]
+    title_div = document.createElement("div")
+    title_div.className = "col-12"
+    title = document.createElement("h2")
+    title.innerText = newdata[0]['title']
+    title_div.appendChild(title)
+    content.appendChild(title_div)
+    Object.keys(newdata[0]['content']).forEach(key => {
+        dd = newdata[0]['content'][key]
+        div = document.createElement("div")
+        div.className = "col-12"
+        college = document.createElement("h3")
+        college.innerText = key
+        div.appendChild(college)
+        table = document.createElement("table")
+        table.className = "table table-hover"
+        thead = document.createElement("thead")
+        thead.className = "thead-dark"
+        tr = '<tr>\
+                <th class="text-center" scope="col" style = "width: 20%;" > 受評單位</th >\
+                <th class="text-center" scope="col" style = "width: 40%;" > 受評學制</th >\
+                <th class="text-center" scope="col" style = "width: 10%;" > 評鑑結果</th >\
+                <th class="text-center" scope="col" style = "width: 30%;" > 期間</th >\
+            </tr >'
+        thead.innerHTML = tr
+        table.appendChild(thead)
+        tbody = document.createElement('tbody')
+        var tmp = ''
+        for (var j = 0; j < dd.length; j++) {
+            tmp = tmp + ' <tr>\
+                        <td class="text-center">'+ dd[j]['unit'] + '</td>\
+                        <td class="text-center">'+ dd[j]['system'] + '</td>\
+                        <td class="text-center">'+ dd[j]['result'] + '</td>\
+                        <td class="text-center">'+ dd[j]['time'] + '</td>\
+                    </tr>'
+
+        }
+        tbody.innerHTML = tmp
+        table.appendChild(tbody)
+        div.appendChild(table)
+        content.appendChild(div)
+    })
+
+</script>
+<script>
+    content = document.getElementsByClassName('container')[1]
+    for (var i = 0; i < data.length; i++) {
+        div = document.createElement("div")
+        div.className = "col-12"
+        year = document.createElement("h3")
+        year.innerText = data[i]["year"] + '年評鑑成績'
+        div.appendChild(year)
+        table = document.createElement("table")
+        table.className = "table table-hover"
+        thead = document.createElement("thead")
+        thead.className = "thead-dark"
+        function res_num(res) {
+            if (res == 0) { return '通過' }
+            else return res + '等'
+        }
+        tr = '<tr>\
+                <th scope="col" style = "width: 70%;" > 受評單位</th >\
+                <th scope="col" style="width: 30%;" class="text-center">'+ data[i]["res_name"] + '</th>\
+            </tr >'
+        thead.innerHTML = tr
+        table.appendChild(thead)
+        tbody = document.createElement('tbody')
+        var tmp = ''
+        for (var j = 0; j < data[i]['unit'].length; j++) {
+            tmp = tmp + ' <tr>\
+                        <td>'+ data[i]['unit'][j] + '</td>\
+                        <td class="text-center">'+ res_num(data[i]['result'][j]) + '</td>\
+                    </tr>'
+
+        }
+        tbody.innerHTML = tmp
+        table.appendChild(tbody)
+        div.appendChild(table)
+        content.appendChild(div)
+    }
+</script>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>106技優申請入學來源分析</title>
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.core.min.js"
+        integrity="sha512-Nml08bTNsmV1v/7rMaYUL6KzLfG87gslxgWtInWf6NhbgivCWsJ0cV3K9l+MwLXwrjKVA4IcbfPoYwvwWdAT2Q=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"
+        integrity="sha512-NerWxp37F9TtBS1k1cr2TjyC9c8Qh6ghgqVBOYXaahgnBkVT6a8KVbO05Z8+LnIIom4CJSSQTZ3VbL396scK5w=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/top.css">
+    <script type="module" src="../js/scroll.js"></script>
+    <script nomodule src="../js/scroll.js"></script>
+    <script src="../js/top.js"></script>
+</head>
+<style>
+    table {
+        overflow: hidden;
+    }
+
+    tr:hover {
+        cursor: pointer;
+        transition: .5s;
+        background-color: rgba(0, 0, 0, .075);
+    }
+
+
+    td,
+    th {
+        position: relative;
+    }
+
+    td:hover::after,
+    th:hover::after {
+        content: "";
+        position: absolute;
+        background-color: rgba(0, 0, 0, .075);
+        left: 0;
+        top: -5000px;
+        /* height: 10000px; */
+        width: 100%;
+        z-index: -1;
+    }
+
+    .thLast {
+        padding-bottom: 0.75rem;
+    }
+
+    @media all and (max-width:768px) {
+        .thLast {
+            padding-bottom: 5rem !important;
+        }
+    }
+</style>
+
+<body>
+    <!--回頂部按鈕-->
+    <button id="topBtn" onclick="topFunction(40)" title="GoTop">Top</button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="align-middle" colspan="8" style="text-align:center;">國立臺中科技大學109學年度處分土地及重大資產案件一覽表
+                </th>
+            </tr>
+            <tr>
+                <th scope="col" colspan="1" width="10%"></th>
+                <th scope="col" class="align-middle" colspan="6" style="text-align:center;">中華民國109年8月1日至110年7月31日</th>
+                <th scope="col" class="align-middle" colspan="1" style="text-align:right;" width="10%">單位：新臺幣元</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">序號</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">處分資產項目</th>
+                <th scope="col" class="align-middle" colspan="3" style="text-align:center;">資產帳面金額</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">變賣淨收入
+                    (D)</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">未實現重估增值減少數
+                    (E)</th>
+                <th scope="col" class="align-middle" rowspan="2" colspan="1" style="text-align:center;">處分利得(損失)
+                    (F=D-C+E)</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" colspan="1" style="text-align:center;">成本或重估價值(A)</th>
+                <th scope="col" class="align-middle" colspan="1" style="text-align:center;">累計折舊
+                    (B)</th>
+                <th scope="col" class="align-middle" colspan="1" style="text-align:center;">淨額(C=A-B)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col" class="align-middle" style="text-align:center;">1</th>
+                <th scope="col" class="align-middle" style="text-align:center;">無</th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+                <th scope="col" class="align-middle" style="text-align:center;"></th>
+            </tr>
+        </tbody>
+        <thead>
+
+            <tr>
+                <th scope="col" class="align-middle" colspan="8">註：</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" colspan="8">1.土地處分皆須於本表揭露處分情形。</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" colspan="8">
+                    2.除土地外之其他資產成本超過100萬元以上及資產殘值超過100萬元以上之資產報廢項目，應於本表揭露處分情形。</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle" colspan="8">3.變賣淨收入＝售價－處理費用</th>
+            </tr>
+            <tr>
+                <th scope="col" class="align-middle thLast" colspan="8">
+                    4.每學年第1學期（8月1日至次年1月31日）之資料應於2月底前完成公告，全學年（8月1日至次年7月31日）之資料應於次年8月31日完成公告。</th>
+            </tr>
+            <tr>
+
+        </thead>
+    </table>
+</body>
+
+</html>

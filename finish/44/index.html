@@ -1,0 +1,481 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>2021大學新生學習適應調查</title>
+    <script src="web/jquery-2.2.4.js"></script>
+    <script src="web/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="web/bootstrap-select.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.core.min.js"
+      integrity="sha512-Nml08bTNsmV1v/7rMaYUL6KzLfG87gslxgWtInWf6NhbgivCWsJ0cV3K9l+MwLXwrjKVA4IcbfPoYwvwWdAT2Q=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"
+      integrity="sha512-NerWxp37F9TtBS1k1cr2TjyC9c8Qh6ghgqVBOYXaahgnBkVT6a8KVbO05Z8+LnIIom4CJSSQTZ3VbL396scK5w=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 class="text-center">2021大學新生學習適應調查</h2>
+      <h2 class="text-center">填答率查詢系統</h2>
+      <div class="col-3 text-center" style="margin-top: 3rem">
+        <select
+          class="selectpicker"
+          multiple
+          data-live-search="true"
+          id="Dep_0"
+          data-max-options=""
+          title="請選擇部別"
+          data-actions-box="true"
+          data-none-selected-text="全部"
+          data-select-all-text="全選"
+          data-deselect-all-text="取消全選">
+          <option value="日間部" selected>日間部</option>
+          <option value="進修部假日班平日班">進修部假日班平日班</option>
+          <option value="進修部夜間班">進修部夜間班</option>
+        </select>
+
+        <!-- <script type="text/javascript"> 
+          window.onload=function(){ 
+           var osel=document.getElementById("Dep_0"); //得到select的ID
+           var opts=osel.getElementsByTagName("option");//得到陣列option
+           var obt=document.getElementById("option");
+           obt.onclick=function(){
+           opts[0].selected=true;//設定option第4個元素，即value="3"為預設選中
+           }
+          } 
+          </script>  -->
+
+
+
+
+
+
+
+
+
+        <select
+          class="selectpicker"
+          multiple
+          data-live-search="true"
+          id="Dep_1"
+          title="請選擇學院"
+          data-actions-box="true"
+          data-none-selected-text="全部"
+          data-select-all-text="全選"
+          data-deselect-all-text="取消全選"
+        >
+        </select>
+        <select
+          class="selectpicker"
+          multiple
+          data-live-search="true"
+          id="Dep_2"
+          size="5"
+          data-max-options=""
+          title="請選擇科系"
+          data-actions-box="true"
+          data-none-selected-text="全部"
+          data-select-all-text="全選"
+          data-deselect-all-text="取消全選"
+        ></select>
+        <!-- <a class="btn btn-info btn-lg btn-3d btn-round" href="#" id="find">查詢</a> -->
+      </div>
+      <canvas id="myChart" width="800px" height="400"></canvas>
+    </div>
+  </body>
+
+
+
+
+  <script type="text/javascript">
+    $(window).on("load", function () {
+      $(".selectpicker").selectpicker({
+        selectedText: "cat",
+      });
+
+      $("#Dep_2").selectpicker({
+        size: 10,
+      });
+    });
+  </script>
+  <script>
+    labels = [];
+    response_rate = []; //填答率
+    answered = []; //已填答
+    no_answer = []; //未填答
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          type: "line",
+          label: "填答率",
+          backgroundColor: "rgba(221,187,147,1)",
+          borderColor: "rgba(179,135,102,1)",
+          data: response_rate,
+          borderWidth: 2,
+          fill: false,
+          tension: 0,
+          datalabels: {
+            color: "#16120E",
+            font: {
+              size: 16,
+            },
+            formatter: function (value, context) {
+              return value + "%";
+            },
+            align: "end",
+            offset: 0,
+          },
+          yAxisID: "B",
+        },
+
+        {
+          type: "bar",
+          label: "已填答",
+          backgroundColor: "#8B88FF",
+          data: answered,
+          stack: "Stack 0",
+          borderWidth: 2,
+          datalabels: {
+            color: "#FFCE56",
+            display: false,
+            font: {
+              size: 20,
+            },
+          },
+          formatter: function (value) {
+            return "$" + value;
+          },
+          // yAxisID: 'A',
+        },
+        {
+          type: "bar",
+          label: "未填答",
+          backgroundColor: "#D6D4AB",
+          data: no_answer,
+          stack: "Stack 0",
+          borderWidth: 2,
+          datalabels: {
+            color: "#FFCE56",
+            display: false,
+            font: {
+              size: 20,
+            },
+          },
+          yAxisID: "A",
+        },
+      ],
+    };
+
+
+    
+
+
+
+
+    const config = {
+      type: "bar",
+      data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: true, //保持長寬比
+        title: {
+          display: false,
+          text: "2021大學新生學習適應調查",
+          fontSize: 22,
+        },
+        legend: {
+          position: "top",
+          labels: {
+            fontSize: 14, //最上面圖形文字大小
+          },
+        },
+        scales: {
+          yAxes: [
+            {
+              id: "A",
+              type: "linear",
+              position: "right",
+              ticks: {
+                callback: function (value, index, values) {
+                  return value + "人";
+                },
+                fontSize: 20,
+              },
+              display: false,
+            },
+            {
+              id: "B",
+              type: "linear",
+              position: "left",
+              ticks: {
+                max: 100,
+                min: 0,
+                callback: function (value, index, values) {
+                  return value + "%";
+                },
+                fontSize: 16,
+              },
+              gridLines: {
+                drawOnChartArea: true, // only want the grid lines for one axis to show up
+              },
+            },
+          ],
+          xAxes: [
+            {
+              ticks: {
+                fontSize: 14, //最下面文字大小
+              },
+            },
+          ],
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+          titleFontSize: 16, //hover title
+          bodyFontSize: 14, //hover content
+          callbacks: {
+            label: function (value) {
+              if (value.datasetIndex == 0) {
+                return "填答率：" + value.yLabel + " %";
+              } else if (value.datasetIndex == 1) {
+                return "已填答：" + value.yLabel + " 人";
+              } else {
+                return "未填答：" + value.yLabel + " 人";
+              }
+            },
+          },
+        },
+      },
+      plugins: [
+        {
+          beforeInit: function (chart) {
+            chart.data.labels.forEach(function (e, i, a) {
+              if (/\n/.test(e)) {
+                a[i] = e.split(/\n/);
+              }
+            });
+          },
+        },
+      ],
+    };
+    myChart = new Chart(document.getElementById("myChart"), config);
+
+
+
+    $("#Dep_2").change(function () {
+      Dep_2_chose = $("#Dep_2").val();
+
+      if (Dep_2_chose == null) {
+        return college(Dep_1_chose);
+      }
+      labels = [];
+      response_rate = [];
+      answered = [];
+      no_answer = [];
+      //3:已填答 4:未填答 5:填答率
+      //     |       |       |
+      //     0       1       2
+      for (var e = 0; e < Dep_2_chose.length; e++) {
+        var tmp = Dep_2_chose[e].split(",");
+        Object.keys(datadata[tmp[0]][tmp[1]][tmp[2]]).forEach((key) => {
+          labels.push(tmp[0] + "\n" + tmp[1] + "\n" + tmp[2] + "\n" + key);
+          answered.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][0]);
+          no_answer.push(datadata[tmp[0]][tmp[1]][tmp[2]][key][1]);
+          response_rate.push(
+            Math.round(datadata[tmp[0]][tmp[1]][tmp[2]][key][2])
+          );
+        });
+      }
+      myChart.data.labels = labels;
+      myChart.data.datasets[0].data = response_rate;
+      myChart.data.datasets[1].data = answered;
+      myChart.data.datasets[2].data = no_answer;
+      myChart.data.labels.forEach(function (e, i, a) {
+        if (/\n/.test(e)) {
+          a[i] = e.split(/\n/);
+        }
+      });
+      myChart.update();
+    });
+    ///學院選擇
+
+
+
+
+
+    $("#Dep_1").change(function () {
+      Dep_1_chose = $("#Dep_1").val();
+      Dep_2 = [];
+      if (Dep_1_chose) {
+        for (var i = 0; i < Dep_1_chose.length; i++) {
+          var tmp = Dep_1_chose[i].split(",");
+          keys = Object.keys(datadata[tmp[0]][[tmp[1]]]);
+          for (var j = 0; j < keys.length; j++) {
+            Dep_2.push([Dep_1_chose[i], keys[j]]);
+          }
+        }
+      }
+      $("#Dep_2").empty();
+      for (var k = 0; k < Dep_2.length; k++) {
+        var tmp = Dep_2[k][0].split(",");
+        $("#Dep_2").append(
+          "<option value='" +
+            [Dep_2[k][0], Dep_2[k][1]] +
+            "'>" +
+            tmp[0] +
+            "-" +
+            tmp[1] +
+            "-" +
+            Dep_2[k][1] +
+            "</option>"
+        );
+      }
+      $("#Dep_2").selectpicker("refresh");
+      if ($("#Dep_2").val() == null) {
+        college(Dep_1_chose);
+      }
+    });
+
+
+
+
+    ///部別選擇
+    $("#Dep_0").change(function () {
+      Dep_0_chose = $("#Dep_0").val();
+      Dep_1 = [];
+      if (Dep_0_chose) {
+        for (var i = 0; i < Dep_0_chose.length; i++) {
+          keys = Object.keys(datadata[Dep_0_chose[i]]);
+          for (var j = 0; j < keys.length; j++) {
+            Dep_1.push([Dep_0_chose[i], keys[j]]);
+          }
+        }
+      }
+      $("#Dep_1").empty();
+      for (var k = 0; k < Dep_1.length; k++) {
+        $("#Dep_1").append(
+          "<option value='" +
+            [Dep_1[k][0], Dep_1[k][1]] +
+            "'>" +
+            Dep_1[k][0] +
+            "-" +
+            Dep_1[k][1] +
+            "</option>"
+        );
+      }
+      $("#Dep_1").selectpicker("refresh");
+    });
+
+
+
+
+    function college(dep2) {
+      labels = [];
+      response_rate = [];
+      answered = [];
+      no_answer = [];
+      for (var t = 0; t < dep2.length; t++) {
+        var tmp = dep2[t].split(",");
+        var current = datadata[tmp[0]][tmp[1]];
+        ans_count = 0;
+        noans_count = 0;
+        Object.keys(current).forEach((key) => {
+          Object.keys(current[key]).forEach((key0) => {
+            ans_count += current[key][key0][0];
+            noans_count += current[key][key0][1];
+          });
+        });
+        labels.push(tmp[0] + "\n" + tmp[1]);
+        response_rate.push(
+          Math.round((ans_count / (ans_count + noans_count)) * 100)
+        );
+        answered.push(ans_count);
+        no_answer.push(noans_count);
+      }
+
+      myChart.data.labels = labels;
+      myChart.data.datasets[0].data = response_rate;
+      myChart.data.datasets[1].data = answered;
+      myChart.data.datasets[2].data = no_answer;
+      myChart.data.labels.forEach(function (e, i, a) {
+        if (/\n/.test(e)) {
+          a[i] = e.split(/\n/);
+        }
+      });
+      myChart.update();
+    }
+    var url = "final.xlsx";
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function (e) {
+      var arraybuffer = oReq.response;
+      var data = new Uint8Array(arraybuffer);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i)
+        arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      var workbook = XLSX.read(bstr, { type: "binary" });
+      var first_sheet_name = workbook.SheetNames[0];
+      /* Get worksheet */
+      var worksheet = workbook.Sheets[first_sheet_name];
+      resdata = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      res = {};
+      Dep = {};
+      Dep_current = 0;
+      datadata = {};
+      function dataformat(current, target, num) {
+        if (num < target.length - 1) {
+          if (current[target[num]]) {
+            dataformat(current[target[num]], target, num + 1);
+          } else {
+            dataformat((current[target[num]] = {}), target, num + 1);
+          }
+        }
+      }
+      function excel2json(target, content) {
+        dataformat(datadata, target, 0);
+        datadata[target[0]][target[1]][target[2]][target[3]] = content;
+      }
+      for (var i = 1; i < resdata.length; ++i) {
+        // datadata[resdata[i][0]][resdata[i][1]][resdata[i][2]] = [resdata[i][3], resdata[i][4], resdata[i][5]]
+        current = resdata[i];
+        excel2json(
+          [current[0], current[1], current[2], current[3]],
+          [current[4], current[5], current[6]]
+        );
+      }
+      $('#Dep_0').selectpicker('val',['日間部']);  //預設顯示調整
+      $('#Dep_0').change()
+      $('#Dep_1').selectpicker('selectAll');
+    };
+    oReq.send();
+
+
+
+
+
+  </script>
+
+
+</html>

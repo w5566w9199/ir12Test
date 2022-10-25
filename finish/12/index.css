@@ -1,0 +1,79 @@
+html, body{
+    margin: 0px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+.grid-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.grid-item{
+    width: 50%;
+    display: flex;
+    min-height: 320px;
+    box-sizing: border-box;
+    -webkit-transition: box-shadow .6s ease;
+    -moz-transition: box-shadow .6s ease;
+    -o-transition: box-shadow .6s ease;
+    transition: box-shadow .6s ease;
+}
+h2{
+    text-align: center;
+    font-size: 2.2rem !important;
+}
+ul > li{
+    font-size: 1.1 rem;
+}
+.card{
+    width: 100%;
+    min-height: 360px;
+    box-sizing: border-box;
+    padding: 2rem;
+    border-radius: 0px !important;
+    border: none !important;
+}
+
+
+.swot-editor{
+    margin-top: 24px;
+    min-height: 300px;
+}
+
+
+
+.swot-editor:focus{
+    outline: none;
+}
+
+
+
+.grid-item:hover, .grid-item:focus{
+    -webkit-box-shadow: 0px 4px 43px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 4px 43px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 4px 43px 0px rgba(0,0,0,0.25);
+    z-index: 1;
+}
+
+
+
+.strengths{
+    background-color: #F8F8E8 !important;
+    color: #333C4A;
+}
+
+.weaknesses{
+    background-color: #fafae5 !important;
+    color: #333C4A;
+}
+
+.opportunities{
+    background-color: #404e5b !important;
+    color: #F8FCEB;
+}
+
+.threats{
+    background-color: #333C4A !important;
+    color: #F8FCEB;
+}
