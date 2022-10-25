@@ -263,6 +263,7 @@
             }
         });
         myChart.update()
+        showData()
     })
 
     ///學院選擇
@@ -287,6 +288,7 @@
         if ($('#Dep_2').val() == null) {
             college(Dep_1_chose);
         }
+        showData()
     })
     ///部別選擇
     $('#Dep_0').change(function () {
@@ -305,6 +307,7 @@
             $('#Dep_1').append("<option value='" + [Dep_1[k][0], Dep_1[k][1]] + "'>" + Dep_1[k][0] + "-" + Dep_1[k][1] + "</option>")
         }
         $('#Dep_1').selectpicker('refresh');
+        showData()
     })
     var oReq;
     ///年度選擇
