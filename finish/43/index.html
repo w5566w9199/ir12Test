@@ -232,7 +232,7 @@
         Dep_2_chose = $('#Dep_2').val()
 
         if (Dep_2_chose == null) {
-            return college(Dep_1_chose);
+            return college(Dep_1_chose,urls[0]);
         }
         labels = []
         response_rate = []
@@ -282,7 +282,7 @@
         }
         $('#Dep_2').selectpicker('refresh');
         if ($('#Dep_2').val() == null) {
-            college(Dep_1_chose);
+            college(Dep_1_chose,urls[0]);
         }
     })
     ///部別選擇
@@ -323,10 +323,11 @@
         }
         $('#Dep_0').selectpicker('refresh');
         if ($('#Dep_0').val() == null) {
-            college(Year_0_chose);
+            college(Year_0_chose,urls[0]);
         }
     })
-    function college(dep2) {
+    var urls=["final.xlsx","final-2021.xlsx"]
+    function college(dep2,url) {
         labels = []
         response_rate = []
         answered = []
@@ -359,7 +360,6 @@
         });
         myChart.update()
     }
-    var url = "final.xlsx";
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
