@@ -303,11 +303,12 @@
         }
         $('#Dep_1').selectpicker('refresh');
     })
+    var oReq = new XMLHttpRequest();
     ///年度選擇
     $('#Year_0').change(function () {
         Year_0_chose = $('#Year_0').val();
         console.log('asdsada'+$('#Year_0').index);
-        var oReq = new XMLHttpRequest();
+        oReq = new XMLHttpRequest();
         oReq.open("GET", $('#Year_0').index, true);
         oReq.responseType = "arraybuffer";
         // Dep_0 = []
