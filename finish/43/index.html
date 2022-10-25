@@ -30,8 +30,8 @@
             <div class="col-3 text-center" style="margin-top: 3rem;">
                 <select class="selectpicker" data-live-search="true" id="Year_0" data-max-options=""
                     title="請選擇年度" >
-                    <option value="111年度">111年度</option>
-                    <option value="110年度">110年度</option>
+                    <option value="1">111年度</option>
+                    <option value="0">110年度</option>
                 </select>
 
                 <select class="selectpicker" multiple data-live-search="true" id="Dep_0" data-max-options=""
@@ -83,6 +83,7 @@
     response_rate = []//填答率
     answered = []//已填答
     no_answer = []//未填答
+    var urls=["final.xlsx","final-2021.xlsx"]
     const data = {
         labels: labels,
         datasets: [{
@@ -305,28 +306,15 @@
     })
     ///年度選擇
     $('#Year_0').change(function () {
-        Year_0_chose = $('#Year_0').val()
+        Year_0_chose = $('#Year_0').val();
+        console.log(Year_0_chose);
+        console.log($('#Year_0').index);
         Dep_0 = []
-        if (Year_0_chose) {
-            for (var i = 0; i < Year_0_chose.length; i++) {
-                var tmp = Year_0_chose[i].split(',')
-                keys = Object.keys(datadata[tmp[0]][[tmp[1]]])
-                for (var j = 0; j < keys.length; j++) {
-                    Dep_0.push([Year_0_chose[i], keys[j]])
-                }
-            }
-        }
-        $('#Dep_0').empty();
-        for (var k = 0; k < Dep_0.length; k++) {
-            var tmp = Dep_0[k][0].split(',')
-            $('#Dep_0').append("<option value='" + [Dep_0[k][0], Dep_0[k][1]] + "'>" + tmp[0] + "-" + tmp[1] + "-" + Dep_0[k][1] + "</option>")
-        }
-        $('#Dep_0').selectpicker('refresh');
         if ($('#Dep_0').val() == null) {
             college(Year_0_chose,urls[0]);
         }
     })
-    var urls=["final.xlsx","final-2021.xlsx"]
+
     function college(dep2,url) {
         labels = []
         response_rate = []
