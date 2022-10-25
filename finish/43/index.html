@@ -309,7 +309,7 @@
         Year_0_chose = $('#Year_0').val();
         console.log('asdsada'+$('#Year_0').index);
         oReq = new XMLHttpRequest();
-        oReq.open("GET", $('#Year_0').index, true);
+        oReq.open("GET",urls[$('#Year_0').index], true);
         oReq.responseType = "arraybuffer";
         // Dep_0 = []
         // if ($('#Dep_0').val() == null) {
@@ -351,7 +351,7 @@
         myChart.update()
     }
     oReq = new XMLHttpRequest();
-    oReq.open("GET", url, true);
+    oReq.open("GET", urls[0], true);
     oReq.responseType = "arraybuffer";
 
     oReq.onload = function (e) {
