@@ -319,7 +319,7 @@
         oReq.responseType = "arraybuffer";
         showData()
         $('#Dep_0').change();
-        $('#Dep_1').change();
+        $('#Dep_1').selectpicker('selectAll');
     })
 
     function college(dep2) {
@@ -395,24 +395,23 @@
                 current = resdata[i]
                 excel2json([current[0], current[1], current[2], current[3]], [current[4], current[5], current[6]])
             }
-            // if (f) {
-            //     $('#Year_0').selectpicker('val', 0);
-            //     $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
-            //     // $('#Dep_0').change()
-            //     $('#Dep_1').selectpicker('selectAll');
-            //     first = false;
-            //     console.log('first load');
-            // }
+            if (f) {
+                $('#Year_0').selectpicker('val', 0);
+                $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
+                // $('#Dep_0').change()
+                $('#Dep_1').selectpicker('selectAll');
+                first = false;
+                console.log('first load')
+            }
         }
         oReq.send();
 
         window.onload = function () {
             // $('#Year_0').selectpicker('val', 0);
-            // $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
-            // $('#Dep_0').change()
+            $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
+            $('#Dep_0').change()
             $('#Dep_1').selectpicker('selectAll');
-            $('#Year_0').change();
-            console.log('final load');
+            console.log('final load')
         }
     }
 
