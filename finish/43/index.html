@@ -317,9 +317,9 @@
         oReq = new XMLHttpRequest();
         oReq.open("GET", urls[$('#Year_0')[0].value], true);
         oReq.responseType = "arraybuffer";
+        showData()
         $('#Dep_0').change();
         $('#Dep_1').change();
-        showData()
     })
 
     function college(dep2) {
@@ -399,8 +399,9 @@
                 $('#Year_0').selectpicker('val', 0);
                 $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
                 // $('#Dep_0').change()
-                $('#Dep_1').selectpicker('selectAll');
+                // $('#Dep_1').selectpicker('selectAll');
                 first = false;
+                console.log('first load')
             }
         }
         oReq.send();
@@ -410,6 +411,7 @@
             $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
             $('#Dep_0').change()
             $('#Dep_1').selectpicker('selectAll');
+            console.log('final load')
         })
     }
 
