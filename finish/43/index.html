@@ -357,8 +357,8 @@
     oReq = new XMLHttpRequest();
     oReq.open("GET", urls[0], true);
     oReq.responseType = "arraybuffer";
-    var first = true;
-    showData();
+    var f = true;
+    showData(f);
     function showData(first) {
         oReq.onload = function (e) {
             var arraybuffer = oReq.response;
