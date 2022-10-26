@@ -24,7 +24,7 @@
 
 <body>
   <div class="container">
-    <h2 class="text-center">2021大學新生學習適應調查</h2>
+    <h2 class="text-center">大學新生學習適應調查</h2>
     <h2 class="text-center">填答率查詢系統</h2>
     <div class="col-3 text-center" style="margin-top: 3rem">
       <select class="selectpicker" data-live-search="true" id="Year_0" data-max-options="" title="請選擇年度">
@@ -167,7 +167,7 @@
       maintainAspectRatio: true, //保持長寬比
       title: {
         display: false,
-        text: "2021大學新生學習適應調查",
+        text: "大學新生學習適應調查",
         fontSize: 22,
       },
       legend: {
@@ -361,7 +361,7 @@
     oReq = new XMLHttpRequest();
     oReq.open("GET", urls[$('#Year_0')[0].value], true);
     oReq.responseType = "arraybuffer";
-    showData()
+    showData(first);
   })
 
 
@@ -446,7 +446,7 @@
         if (f) {
           $('#Year_0').selectpicker('val', 0);
           first = false;
-          console.log('first load')
+          console.log('first load');
         }
       }
       $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
