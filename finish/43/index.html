@@ -230,7 +230,11 @@
 
 
     myChart = new Chart(document.getElementById('myChart'), config);
-
+    oReq = new XMLHttpRequest();
+    oReq.open("GET", urls[0], true);
+    oReq.responseType = "arraybuffer";
+    var first = true;
+    showData();
     $('#Dep_2').change(function () {
         Dep_2_chose = $('#Dep_2').val()
 
@@ -353,11 +357,7 @@
         });
         myChart.update()
     }
-    oReq = new XMLHttpRequest();
-    oReq.open("GET", urls[0], true);
-    oReq.responseType = "arraybuffer";
-    var first = true;
-    showData();
+
     function showData(first) {
         oReq.onload = function (e) {
             var arraybuffer = oReq.response;
