@@ -318,7 +318,7 @@
         oReq.open("GET", urls[$('#Year_0')[0].value], true);
         oReq.responseType = "arraybuffer";
         $('#Dep_0').change();
-        $('#Dep_1').change();
+        // $('#Dep_1').change();
         showData(first)
     })
 
@@ -404,7 +404,7 @@
         }
         oReq.send();
 
-        $(window).onload(function () {
+        $(window).load(function () {
             $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
             $('#Dep_0').change()
             $('#Dep_1').selectpicker('selectAll');
