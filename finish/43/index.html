@@ -297,7 +297,6 @@
             console.log('pass');
             for (var i = 0; i < Dep_0_chose.length; i++) {
                 keys = Object.keys(datadata[Dep_0_chose[i]])
-                console.log(data0)
                 for (var j = 0; j < keys.length; j++) {
                     Dep_1.push([Dep_0_chose[i], keys[j]])
                 }
@@ -319,8 +318,8 @@
         oReq.open("GET", urls[$('#Year_0')[0].value], true);
         oReq.responseType = "arraybuffer";
         $('#Dep_0').change();
-        // $('#Dep_1').change();
-        showData(first)
+        $('#Dep_1').change();
+        showData()
     })
 
     function college(dep2) {
@@ -406,13 +405,14 @@
         }
         oReq.send();
 
+        $(window).load(function () {
+            $('#Year_0').selectpicker('val', 0);
+            $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
+            $('#Dep_0').change()
+            $('#Dep_1').selectpicker('selectAll');
+        })
     }
-    $(window).load(function () {
-        $('#Dep_0').selectpicker('val', ['日間部']);  //預設顯示調整
-        $('#Dep_0').change()
-        $('#Dep_1').selectpicker('selectAll');
-    })
-    
+
 </script>
 
 </html>
